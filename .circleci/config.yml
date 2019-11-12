@@ -3,6 +3,8 @@ workflows:
   docker-react:
     jobs:
       build:
+        docker:
+          - image: circleci/node@1.1.6
         working_directory: ~/docker-react
         steps:
           - setup_remote_docker:
