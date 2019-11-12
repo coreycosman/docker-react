@@ -1,24 +1,22 @@
-workflows:
-  version: 2.1
-  docker-react:
-    jobs:
-      build:
-        docker:
-          - image: circleci/node@1.1.6
-        working_directory: ~/docker-react
-        steps:
-          - setup_remote_docker:
-              docker_layer_caching: true
-          - checkout
-          - run:
-            name: Install Docker client
-            command: |
-              set -x
-              VER="17.03.0-ce"
-              curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
-              tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-              mv /tmp/docker/* /usr/bin
-          - run:
-              name: docker build and push Docker Image
-              command: |
-                docker build -f ./Dockerfile.dev
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/docker-react
+    docker:
+      - image: circleci/node@11.10.1
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="17.03.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
+      - run:
+          name: docker build and push Docker Image
+          command: |
+            docker build -f ./Dockerfile.dev
