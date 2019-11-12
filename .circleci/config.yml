@@ -6,7 +6,6 @@ workflows:
         working_directory: ~/docker-react
         docker:
           - image: circleci/node:11.10.1
-          - image: mongo:3.4.4
         steps:
           - checkout
           - run:
